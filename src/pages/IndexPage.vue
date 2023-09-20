@@ -1,17 +1,25 @@
 <template>
-  <q-page>
-    <!-- <card-charts /> -->
-    <ChartCard :chartData="datosDeGrafico" />
+  <q-page class="q-pa-md">
+    <div class="row">
+      <!-- <card-charts /> -->
+      <ChartCard class="col" :chartData="datosDeGrafico" />
+      <ChartCard class="col" :chartData="datosDeGrafico" />
+      <ChartCard class="col" :chartData="datosDeGrafico" />
+    </div>
+    <div class="row">
+      <TableComponent class="col" />
+    </div>
   </q-page>
 </template>
 
 <script>
 // import CardCharts from "src/components/CardCharts.vue";
 import ChartCard from "src/components/Cards/ChartCard.vue";
+import TableComponent from "src/components/Tables/TableComponent.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: { ChartCard },
+  components: { ChartCard, TableComponent },
   name: "IndexPage",
   setup() {
     return {
