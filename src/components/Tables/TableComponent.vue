@@ -8,11 +8,12 @@
       :columns="columns"
       color="primary"
       row-key="name"
+      :rows-per-page-options="[]"
     >
       <template v-slot:top-right>
         <q-btn
           color="primary"
-          icon-right="archive"
+          icon-right="las la-archive"
           label="Export to csv"
           no-caps
           @click="exportTable"

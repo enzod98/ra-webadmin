@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR lfr">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-btn dense flat round icon="las la-bars" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
           <q-avatar>
