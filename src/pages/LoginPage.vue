@@ -41,12 +41,15 @@
 <script>
 import { useQuasar } from "quasar";
 import { ref } from "vue";
+import { api } from "boot/axios";
 
 export default {
   setup() {
     const $q = useQuasar();
     const username = ref("");
     const password = ref("");
+
+    console.log(api.getUri());
 
     return {
       username,
