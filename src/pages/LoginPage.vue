@@ -25,7 +25,12 @@
         </template>
       </q-input>
       <div>
-        <q-btn label="Submit" type="submit" color="primary" />
+        <q-btn
+          label="Submit"
+          type="submit"
+          color="primary"
+          :loading="sendingData"
+        />
         <q-btn
           label="Reset"
           type="reset"
@@ -48,21 +53,40 @@ export default {
     const $q = useQuasar();
     const username = ref("");
     const password = ref("");
+    const sendingData = ref(false);
 
-    console.log(api.getUri());
+    const onSubmit = async () => {
+      sendingData.value = true;
+      await api
+        .post("login", { email: username.value, password: password.value })
+        .then(({ data }) => {
+          $q.notify({
+            icon: "las la-check-circle",
+            type: "positive",
+            message: "Sesión iniciada! Redireccionando...",
+            timeout: 3000,
+            position: "top",
+          });
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          $q.notify({
+            icon: "las la-exclamation-triangle",
+            type: "negative",
+            message: err.response.data.error.message,
+            timeout: 3000,
+            position: "top",
+          });
+        });
+      sendingData.value = false;
+    };
 
     return {
       username,
       password,
+      sendingData,
       isPwd: ref(true),
-      onSubmit() {
-        $q.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Submitted",
-        });
-      },
+      onSubmit,
 
       onReset() {
         username.value = null;
