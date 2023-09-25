@@ -9,6 +9,11 @@ import axios from "axios";
 // for each client)
 const api = axios.create({
   baseURL: process.env.Q_AXIOS_BASE_URL.replace("{PORT}", process.env.PORT),
+  withCredentials: true,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json",
+  },
 });
 
 export default boot(({ app }) => {

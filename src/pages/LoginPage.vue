@@ -47,10 +47,15 @@
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { api } from "boot/axios";
+import { useRouter } from "vue-router";
+
+import { setUserTokenSession } from "../composables/cookiesComposable";
 
 export default {
   setup() {
     const $q = useQuasar();
+    const $router = useRouter();
+
     const username = ref("");
     const password = ref("");
     const sendingData = ref(false);
@@ -60,6 +65,8 @@ export default {
       await api
         .post("login", { email: username.value, password: password.value })
         .then(({ data }) => {
+          console.log(data);
+          setUserTokenSession(data.token);
           $q.notify({
             icon: "las la-check-circle",
             type: "positive",
@@ -67,6 +74,7 @@ export default {
             timeout: 3000,
             position: "top",
           });
+          $router.push("/");
         })
         .catch((err) => {
           console.log(err.response.data);

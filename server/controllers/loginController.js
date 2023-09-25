@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { verificarToken } = require("../middlewares/authMiddleware");
 
 const Usuario = require("../models/usuarioModel");
 
@@ -48,6 +49,13 @@ app.post("/login", (req, res) => {
         err,
       });
     });
+});
+
+app.post("/login/validar-token", verificarToken, (req, res) => {
+  console.log("sii");
+  return res.status(200).json({
+    ok: true,
+  });
 });
 
 module.exports = app;

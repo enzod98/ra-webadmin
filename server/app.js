@@ -5,6 +5,7 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+var cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 const morgan = require("morgan");
@@ -12,10 +13,11 @@ const cors = require("cors");
 
 //      MIDDLEWARES: ACTIVAR SÓLO EN AMBIENTE DE DESARROLLO
 app.use(morgan("tiny"));
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:9000" }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //      RUTAS API
 app.use(require("./controllers/index"));
