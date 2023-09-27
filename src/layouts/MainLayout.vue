@@ -32,36 +32,12 @@
         "
       >
         <q-list padding>
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple @click="signOut">
             <q-item-section avatar>
-              <q-icon name="inbox" />
+              <q-icon name="las la-sign-out-alt" />
             </q-item-section>
 
-            <q-item-section> Inbox </q-item-section>
-          </q-item>
-
-          <q-item active clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="star" />
-            </q-item-section>
-
-            <q-item-section> Star </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="send" />
-            </q-item-section>
-
-            <q-item-section> Send </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="drafts" />
-            </q-item-section>
-
-            <q-item-section> Drafts </q-item-section>
+            <q-item-section> Cerrar sesión </q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
@@ -74,14 +50,34 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { removeUserTokenSession } from "../composables/cookiesComposable";
+
+const $router = useRouter();
 
 export default {
   setup() {
+    const $q = useQuasar();
+    const $router = useRouter();
+
     const leftDrawerOpen = ref(false);
+    const signOut = () => {
+      removeUserTokenSession();
+      $router.push("/login");
+      $q.notify({
+        icon: "las la-exclamation-triangle",
+        type: "negative",
+        message: "Sesión finalizada.",
+        timeout: 3000,
+        position: "top",
+      });
+    };
 
     return {
       leftDrawerOpen,
+      signOut,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },

@@ -12,11 +12,11 @@ export default boot(async ({ router }) => {
       await api
         .post("login/validar-token")
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           return next();
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           return next("login");
         });
     } else {
