@@ -1,45 +1,56 @@
 <template>
-  <div class="q-pa-md">
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-      <q-input rounded filled v-model="username" label="Usuario">
-        <template v-slot:prepend>
-          <q-icon name="las la-user" />
-        </template>
-      </q-input>
-      <q-input
-        v-model="password"
-        rounded
-        filled
-        :type="isPwd ? 'password' : 'text'"
-        label="Contraseña"
-      >
-        <template v-slot:append>
-          <q-icon
-            :name="isPwd ? 'las la-low-vision' : 'las la-eye'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-          />
-        </template>
-        <template v-slot:prepend>
-          <q-icon name="las la-key" />
-        </template>
-      </q-input>
-      <div>
-        <q-btn
-          label="Submit"
-          type="submit"
-          color="primary"
-          :loading="sendingData"
-        />
-        <q-btn
-          label="Reset"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
-      </div>
-    </q-form>
+  <div class="window-height bg-primary">
+    <div class="q-pa-md row justify-center q-pt-xl">
+      <q-card class="col-12 col-md-8 card-radius">
+        <h3 class="text-center col-12">Iniciar Sesión</h3>
+        <div class="q-pa-xl">
+          <q-form
+            @submit="onSubmit"
+            @reset="onReset"
+            class="q-gutter-md items-center"
+          >
+            <q-input rounded filled v-model="username" label="Usuario">
+              <template v-slot:prepend>
+                <q-icon name="las la-user" />
+              </template>
+            </q-input>
+            <q-input
+              v-model="password"
+              rounded
+              filled
+              :type="isPwd ? 'password' : 'text'"
+              label="Contraseña"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'las la-low-vision' : 'las la-eye'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+              <template v-slot:prepend>
+                <q-icon name="las la-key" />
+              </template>
+            </q-input>
+            <div>
+              <q-btn
+                label="Ingresar"
+                type="submit"
+                color="primary"
+                :loading="sendingData"
+              />
+              <q-btn
+                label="Limpiar campos"
+                type="reset"
+                color="primary"
+                flat
+                class="q-ml-sm"
+              />
+            </div>
+          </q-form>
+        </div>
+      </q-card>
+    </div>
   </div>
 </template>
 
@@ -104,3 +115,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.card-radius {
+  /* border: 5px solid red; */
+  border-top-left-radius: 5rem !important;
+  border-bottom-right-radius: 5rem !important;
+}
+</style>

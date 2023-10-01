@@ -17,7 +17,7 @@
       <q-img class="absolute-top bg-primary" style="height: 150px">
         <div class="absolute-center bg-transparent text-center">
           <q-avatar size="56px" class="q-mb-sm">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+            <img src="~assets/images/usuario.png" />
           </q-avatar>
           <div class="text-weight-bold">Razvan Stoenescu</div>
           <div>@rstoenescu</div>
