@@ -4,7 +4,7 @@ import { getUserTokenSession } from "../composables/cookiesComposable";
 
 export default boot(async ({ router }) => {
   router.beforeEach(async (to, from, next) => {
-    const publicPages = ["/login"];
+    const publicPages = ["/login", "/ra"];
     const authRequired = !publicPages.includes(to.path);
     // console.log(getUserTokenSession());
 
