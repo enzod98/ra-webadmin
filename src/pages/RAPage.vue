@@ -1,51 +1,117 @@
 <template>
-  <div>
-    <div class="q-pa-md">
-      <p class="h3">{{ idLocation }}</p>
-      <q-dialog v-model="necesitaPermisos" persistent>
-        <q-card class="q-py-lg">
-          <q-card-section class="row items-center justify-center">
-            <q-avatar
-              icon="las la-info-circle"
-              color="primary"
-              text-color="white"
-            />
-            <span class="q-ml-sm text-h6"
-              >Necesitamos acceso al hardware de tu equipo</span
-            >
-          </q-card-section>
+  <div style="margin: 0; overflow: hidden" class="window-height">
+    <a-scene
+      v-if="!necesitaPermisos"
+      embedded
+      renderer="logarithmicDepthBuffer: true;"
+      loading-screen="enabled: false;"
+      arjs="sourceType: webcam; debugUIEnabled: true;"
+    >
+      <!-- <a-assets>
+        <a-asset-item
+          id="animated-asset"
+          src="/assets/asset.gltf"
+        ></a-asset-item>
+      </a-assets> -->
 
-          <q-card-section class="row items-center q-mx-lg">
-            <p class="text-center">
-              Para una experiencia completa de realidad virtual, esta aplicación
-              necesita autorización para utilziar tu cámara y tu ubicación
-              actual. <br />
-              ¡No te preocupes! No recopilamos ningún tipo de información
-              personal
-            </p>
-          </q-card-section>
+      <a-entity
+        look-at="[gps-camera]"
+        animation-mixer="loop: repeat"
+        gltf-model="/assets/asset.gltf"
+        scale="0.05 0.05 0.05"
+        position="1 1.71 -2.71 "
+      ></a-entity>
 
-          <q-card-actions align="center">
-            <q-btn
-              round
-              icon="las la-camera"
-              class="q-pa-md"
-              :color="tieneAccesoACamara ? 'green' : 'red'"
-              :disable="tieneAccesoACamara"
-              @click="eventoSolicitarAccesoCamara"
-            />
-            <q-btn
-              round
-              icon="las la-map-marker"
-              class="q-pa-md"
-              :color="tieneAccesoAUbicacion ? 'green' : 'red'"
-              :disable="tieneAccesoAUbicacion"
-              @click="eventoSolicitarAccesoUbicacion"
-            />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-    </div>
+      <a-assets>
+        <img id="platform" src="/images/unida.jpg" />
+      </a-assets>
+
+      <!-- Basic circle. -->
+      <!-- <a-circle color="#CCC" radius="5"></a-circle> -->
+
+      <!-- Textured circle parallel to ground. -->
+      <a-circle src="#platform" radius=".5" position="5 1.71 -2.71 ">
+      </a-circle>
+
+      <a-entity
+        geometry="primitive: box"
+        position="-1 0.5 -3"
+        rotation="0 45 0"
+        color="#4CC3D9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: sphere"
+        position="0 1.25 -5"
+        radius="1.0"
+        color="#EF2D5E"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: cylinder"
+        position="1 0.75 -3"
+        radius="0.25"
+        height="1.5"
+        color="#FFC65D"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: plane"
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"
+      ></a-entity>
+
+      <a-entity camera look-controls position="0 1.6 0">
+        <!-- Para dejar fijo un objeto en la cámara, se añade la entidad como hijo de la etiqueta -->
+        <a-entity
+          geometry="primitive: plane; height: 0.2; width: 0.2"
+          position="0 0 -1"
+          material="color: gray; opacity: 0.5"
+        ></a-entity>
+      </a-entity>
+    </a-scene>
+    <q-dialog v-model="necesitaPermisos" persistent>
+      <q-card class="q-py-lg">
+        <q-card-section class="row items-center justify-center">
+          <q-avatar
+            icon="las la-info-circle"
+            color="primary"
+            text-color="white"
+          />
+          <span class="q-ml-sm text-h6"
+            >Necesitamos acceso al hardware de tu equipo</span
+          >
+        </q-card-section>
+
+        <q-card-section class="row items-center q-mx-lg">
+          <p class="text-center">
+            Para una experiencia completa de realidad virtual, esta aplicación
+            necesita autorización para utilziar tu cámara y tu ubicación actual.
+            <br />
+            ¡No te preocupes! No recopilamos ningún tipo de información personal
+          </p>
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn
+            round
+            icon="las la-camera"
+            class="q-pa-md"
+            :color="tieneAccesoACamara ? 'green' : 'red'"
+            :disable="tieneAccesoACamara"
+            @click="eventoSolicitarAccesoCamara"
+          />
+          <q-btn
+            round
+            icon="las la-map-marker"
+            class="q-pa-md"
+            :color="tieneAccesoAUbicacion ? 'green' : 'red'"
+            :disable="tieneAccesoAUbicacion"
+            @click="eventoSolicitarAccesoUbicacion"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -86,7 +152,7 @@ export default {
         type: "negative",
         spinner: false,
         message: `¡Acceso a ${tipoPermiso} denegado! Favor otorgue los permisos desde la configuración del navegador`,
-        position: "center",
+        position: "top",
         actions: [
           {
             label: "Aceptar",
@@ -103,7 +169,7 @@ export default {
         type: "ongoing",
         message: "Solicitando permisos",
         timeout: 0,
-        position: "center",
+        position: "top",
       });
     }
 
@@ -114,7 +180,7 @@ export default {
         spinner: false,
         message: `¡Acceso a ${tipoPermiso} otorgado!`,
         timeout: 2500,
-        position: "center",
+        position: "top",
       });
     }
 
