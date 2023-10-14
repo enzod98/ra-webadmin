@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="q-pa-md">
-      <q-btn label="Open Dialog" color="primary" @click="dialog = true" />
-
+      <p class="h3">{{ idLocation }}</p>
       <q-dialog v-model="necesitaPermisos" persistent>
         <q-card class="q-py-lg">
           <q-card-section class="row items-center justify-center">
@@ -53,10 +52,15 @@
 <script>
 import { ref, computed, onBeforeMount } from "vue";
 import { useQuasar, QSpinnerGears } from "quasar";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
     const $q = useQuasar();
+    const $router = useRouter();
+
+    const idLocation = $router.currentRoute.value.params.idLocation;
+
     const tieneAccesoACamara = ref(true);
     const tieneAccesoAUbicacion = ref(true);
 
@@ -115,6 +119,7 @@ export default {
     }
 
     return {
+      idLocation,
       tieneAccesoACamara,
       tieneAccesoAUbicacion,
       necesitaPermisos,

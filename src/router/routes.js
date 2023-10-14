@@ -18,7 +18,7 @@ const routes = [
   },
   {
     name: "ra",
-    path: "/ra",
+    path: "/ra/:idLocation",
     component: () => import("pages/RAPage.vue"),
   },
 
