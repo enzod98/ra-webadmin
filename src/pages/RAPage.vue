@@ -7,12 +7,9 @@
       loading-screen="enabled: false;"
       arjs="sourceType: webcam; debugUIEnabled: true;"
     >
-      <!-- <a-assets>
-        <a-asset-item
-          id="animated-asset"
-          src="/assets/asset.gltf"
-        ></a-asset-item>
-      </a-assets> -->
+      <a-assets>
+        <img id="platform" src="/images/unida.jpg" />
+      </a-assets>
 
       <a-entity
         look-at="[gps-camera]"
@@ -22,9 +19,8 @@
         position="1 1.71 -2.71 "
       ></a-entity>
 
-      <a-assets>
-        <img id="platform" src="/images/unida.jpg" />
-      </a-assets>
+      <!-- <a-assets>
+      </a-assets> -->
 
       <!-- Basic circle. -->
       <!-- <a-circle color="#CCC" radius="5"></a-circle> -->
