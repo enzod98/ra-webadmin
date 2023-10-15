@@ -2,11 +2,14 @@
   <div style="margin: 0; overflow: hidden" class="window-height">
     <a-scene
       v-if="!necesitaPermisos"
+      vr-mode-ui="enabled: false;"
       embedded
       renderer="logarithmicDepthBuffer: true;"
       loading-screen="enabled: false;"
-      arjs="sourceType: webcam; debugUIEnabled: true;"
+      arjs="sourceType: webcam; debugUIEnabled: true;trackingMethod: best;"
     >
+      <a-marker preset="hiro" markerhandler> </a-marker>
+
       <a-assets>
         <img id="platform" src="/images/unida.jpg" />
       </a-assets>
@@ -19,13 +22,6 @@
         position="1 1.71 -2.71 "
       ></a-entity>
 
-      <!-- <a-assets>
-      </a-assets> -->
-
-      <!-- Basic circle. -->
-      <!-- <a-circle color="#CCC" radius="5"></a-circle> -->
-
-      <!-- Textured circle parallel to ground. -->
       <a-circle src="#platform" radius=".5" position="5 1.71 -2.71 ">
       </a-circle>
 
@@ -57,7 +53,9 @@
         color="#7BC8A4"
       ></a-entity>
 
-      <a-entity camera look-controls position="0 1.6 0">
+      <!-- <a-box material="color: yellow" position="2 2 0" /> -->
+
+      <a-entity camera look-controls position="0 2 10">
         <!-- Para dejar fijo un objeto en la cámara, se añade la entidad como hijo de la etiqueta -->
         <a-entity
           geometry="primitive: plane; height: 0.2; width: 0.2"
@@ -65,6 +63,14 @@
           material="color: gray; opacity: 0.5"
         ></a-entity>
       </a-entity>
+      <!-- <a-camera
+        gps-new-camera
+        gpsTimeInterval="1000000000"
+        simulateLatitude="1"
+        simulateLongitude="1"
+        simulateAltitude="1"
+        arjs-device-orientation-controls="smoothingFactor: 0.1"
+      ></a-camera> -->
     </a-scene>
     <q-dialog v-model="necesitaPermisos" persistent>
       <q-card class="q-py-lg">
@@ -134,6 +140,20 @@ export default {
 
       tieneAccesoACamara.value = accesoACamara.state === "granted";
       tieneAccesoAUbicacion.value = accesoAUbicacion.state === "granted";
+    });
+
+    AFRAME.registerComponent("markerhandler", {
+      init: function () {
+        this.el.sceneEl.addEventListener("markerFound", () => {
+          $q.notify({
+            icon: "las la-check-circle",
+            type: "positive",
+            message: "Contenido calibrado!",
+            timeout: 3000,
+            position: "top",
+          });
+        });
+      },
     });
 
     const necesitaPermisos = computed(
