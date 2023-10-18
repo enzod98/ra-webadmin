@@ -10,13 +10,21 @@ export default boot(async ({ router }) => {
 
     if (authRequired) {
       await api
-        .post("login/validar-token")
+        .post(
+          "login/validar-token",
+          {},
+          {
+            headers: {
+              Authorization: getUserTokenSession(),
+            },
+          }
+        )
         .then(({ data }) => {
           // console.log(data);
           return next();
         })
         .catch((err) => {
-          // console.log(err);
+          console.log(err);
           return next("login");
         });
     } else {

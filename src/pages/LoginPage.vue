@@ -76,7 +76,7 @@ export default {
       await api
         .post("login", { email: username.value, password: password.value })
         .then(({ data }) => {
-          // console.log(data);
+          console.log(data);
           setUserTokenSession(data.token);
           $q.notify({
             icon: "las la-check-circle",

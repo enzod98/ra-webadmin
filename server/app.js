@@ -13,7 +13,12 @@ const cors = require("cors");
 
 //      MIDDLEWARES: ACTIVAR SÓLO EN AMBIENTE DE DESARROLLO
 app.use(morgan("tiny"));
-app.use(cors({ credentials: true, origin: "http://localhost:9000" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://localhost:" + process.env.Q_PORT,
+  })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
