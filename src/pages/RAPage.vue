@@ -12,6 +12,10 @@
 
       <a-assets>
         <img id="platform" src="/images/unida.jpg" />
+        <a-asset-item
+          id="optimerBoldFont"
+          src="https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"
+        ></a-asset-item>
       </a-assets>
 
       <a-entity
@@ -61,7 +65,31 @@
           geometry="primitive: plane; height: 0.2; width: 0.2"
           position="0 0 -1"
           material="color: gray; opacity: 0.5"
+          text="width: auto; color:white;value: This text will be 4 units wide."
         ></a-entity>
+        <a-entity> </a-entity>
+
+        <a-entity
+          id="entityTextBloque"
+          text-geometry="value: Bloque; size:0.03;"
+          position="-0.065 0.3 -1"
+          rotation="20 0 0"
+        ></a-entity>
+
+        <!-- <a-entity
+          text-geometry="value: Planta; size:0.01"
+          position="0 0.275 -1"
+        ></a-entity> -->
+        <!-- <a-entity
+          position="0 0 -1"
+          text-geometry="value: Dog?; font: #optimerBoldFont"
+        ></a-entity> -->
+
+        <!-- <a-entity
+          geometry="primitive: plane; height: 0.2; width: 0.2"
+          position="0 0 -1"
+          material="color: gray; opacity: 0.5"
+        ></a-entity> -->
       </a-entity>
       <!-- <a-camera
         gps-new-camera
@@ -72,7 +100,7 @@
         arjs-device-orientation-controls="smoothingFactor: 0.1"
       ></a-camera> -->
     </a-scene>
-    <q-dialog v-model="necesitaPermisos" persistent>
+    <q-dialog v-model="necesitaPermisos" per sistent>
       <q-card class="q-py-lg">
         <q-card-section class="row items-center justify-center">
           <q-avatar
@@ -119,6 +147,7 @@
 
 <script>
 import { ref, computed, onBeforeMount } from "vue";
+import { api } from "boot/axios";
 import { useQuasar, QSpinnerGears } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -140,6 +169,28 @@ export default {
 
       tieneAccesoACamara.value = accesoACamara.state === "granted";
       tieneAccesoAUbicacion.value = accesoAUbicacion.state === "granted";
+
+      await api
+        .get("contenido/" + idLocation)
+        .then((resp) => {
+          let { data } = resp;
+          console.log(data.contenido.bloque);
+          let el = document.getElementById("entityTextBloque");
+          el.setAttribute("text-geometry", {
+            value: "Bloque " + data.contenido.bloque,
+          });
+        })
+        .catch(({ response }) => {
+          console.log(response);
+          $q.notify({
+            icon: "las la-times",
+            type: "negative",
+            message: response.data.err,
+            actions: [{ label: "Cerrar", color: "white" }],
+            position: "center",
+            timeout: 0,
+          });
+        });
     });
 
     AFRAME.registerComponent("markerhandler", {

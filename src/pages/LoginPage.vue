@@ -88,7 +88,7 @@ export default {
           $router.push("/");
         })
         .catch((err) => {
-          // console.log(err.response.data);
+          console.log(err.response.data);
           $q.notify({
             icon: "las la-exclamation-triangle",
             type: "negative",
