@@ -16,7 +16,10 @@ app.use(morgan("tiny"));
 app.use(
   cors({
     credentials: true,
-    origin: "https://localhost:" + process.env.Q_PORT,
+    origin: [
+      "https://localhost:" + process.env.Q_PORT,
+      "https://192.168.100.3:9000/",
+    ],
   })
 );
 

@@ -19,7 +19,7 @@
           <q-avatar size="56px" class="q-mb-sm">
             <img src="~assets/images/usuario.png" />
           </q-avatar>
-          <div class="text-weight-bold">Dani puto</div>
+          <div class="text-weight-bold">Admin</div>
           <div>@rstoenescu</div>
         </div>
       </q-img>

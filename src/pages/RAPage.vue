@@ -71,9 +71,16 @@
 
         <a-entity
           id="entityTextBloque"
-          text-geometry="value: Bloque; size:0.03;"
-          position="-0.065 0.3 -1"
-          rotation="20 0 0"
+          text-geometry="value: Bloque; size:0.05;"
+          position="-0.125 0.65 -2"
+          rotation="15 0 0"
+        ></a-entity>
+
+        <a-entity
+          id="entityTextNivel"
+          text-geometry="value: Nivel; size:0.0375;"
+          position="-0.05 0.6 -2"
+          rotation="15 0 0"
         ></a-entity>
 
         <!-- <a-entity
@@ -172,12 +179,18 @@ export default {
 
       await api
         .get("contenido/" + idLocation)
-        .then((resp) => {
-          let { data } = resp;
-          console.log(data.contenido.bloque);
-          let el = document.getElementById("entityTextBloque");
-          el.setAttribute("text-geometry", {
-            value: "Bloque " + data.contenido.bloque,
+        .then(({ data }) => {
+          let { contenido } = data;
+          console.log(contenido);
+
+          let elBloque = document.getElementById("entityTextBloque");
+          elBloque.setAttribute("text-geometry", {
+            value: "Bloque " + contenido.bloque,
+          });
+
+          let elPlanta = document.getElementById("entityTextNivel");
+          elPlanta.setAttribute("text-geometry", {
+            value: "Nivel " + contenido.nivel,
           });
         })
         .catch(({ response }) => {
