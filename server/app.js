@@ -18,7 +18,7 @@ app.use(
     credentials: true,
     origin: [
       "https://" + process.env.Q_HOSTNAME + ":" + process.env.Q_PORT,
-      Q_HOSTNAME,
+      process.env.Q_HOSTNAME,
     ],
   })
 );
