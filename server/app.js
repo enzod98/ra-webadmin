@@ -17,8 +17,8 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      "https://localhost:" + process.env.Q_PORT,
-      "https://192.168.100.3:9000/",
+      "https://" + process.env.Q_HOSTNAME + ":" + process.env.Q_PORT,
+      Q_HOSTNAME,
     ],
   })
 );
@@ -31,9 +31,9 @@ app.use(cookieParser());
 app.use(require("./controllers/index"));
 
 // Middleware para Vue.js router modo history
-// const history = require("connect-history-api-fallback");
-// app.use(history());
-// app.use(express.static(path.join(__dirname, "../dist/spa")));
+const history = require("connect-history-api-fallback");
+app.use(history());
+app.use(express.static(path.join(__dirname, "../dist/spa")));
 
 mongoose
   .connect(process.env.URL_DB)
