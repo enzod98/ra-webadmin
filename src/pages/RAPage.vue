@@ -26,6 +26,16 @@
         position="1 1.71 -2.71 "
       ></a-entity>
 
+      <a-entity
+        look-at="[gps-camera]"
+        animation-mixer="loop: repeat"
+        gltf-model="/assets/skeleton.gltf"
+        rotation="0 100 4"
+        scale="2 2 2"
+        position="16 -2 1"
+        material="color: gray; opacity: 0.5"
+      ></a-entity>
+
       <a-circle src="#platform" radius=".5" position="5 1.71 -2.71 ">
       </a-circle>
 
@@ -61,25 +71,49 @@
 
       <a-entity camera look-controls position="0 2 10">
         <!-- Para dejar fijo un objeto en la cámara, se añade la entidad como hijo de la etiqueta -->
-        <a-entity
-          geometry="primitive: plane; height: 0.2; width: 0.2"
+        <!-- <a-entity
+          geometry="primitive: plane; height: 1; width: 1"
           position="0 0 -1"
           material="color: gray; opacity: 0.5"
           text="width: auto; color:white;value: This text will be 4 units wide."
-        ></a-entity>
-        <a-entity> </a-entity>
+        ></a-entity> -->
+
+        <a-image
+          geometry="primitive: plane; height: 80; width: 45"
+          position="-12 -0.15 -50"
+          src="/images/pasillo_nutri.jpeg"
+          text="width: auto; color:white;value: This text will be 4 units wide."
+        ></a-image>
+
+        <a-entity
+          geometry="primitive: plane; height:3; width: 0.75"
+          position="0.5 -2.5 -10"
+          rotation="-75 -50 65"
+          color="#EF2D5E"
+        >
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: Fisioterapia; size:0.35;"
+            position="0 1.2 0"
+            rotation="0 0 -90"
+          ></a-entity>
+        </a-entity>
 
         <a-entity
           id="entityTextBloque"
-          text-geometry="value: Bloque; size:0.05;"
-          position="-0.125 0.65 -2"
+          material="color:#e1e1e1; blending: additive;"
+          text-geometry="value: Bloque; size:0.015;baseline:center;"
+          position="-0.055 0.15 -0.5"
           rotation="15 0 0"
-        ></a-entity>
+        >
+        </a-entity>
 
         <a-entity
           id="entityTextNivel"
-          text-geometry="value: Nivel; size:0.0375;"
-          position="-0.05 0.6 -2"
+          material="color:#e1e1e1"
+          text-geometry="value: Nivel; size:0.0125;"
+          text="baseline:center"
+          position="-0.05 0.125 -0.5"
           rotation="15 0 0"
         ></a-entity>
 
@@ -190,7 +224,7 @@ export default {
 
           let elPlanta = document.getElementById("entityTextNivel");
           elPlanta.setAttribute("text-geometry", {
-            value: "Nivel " + contenido.nivel,
+            value: "" + contenido.nivel,
           });
         })
         .catch(({ response }) => {
