@@ -2,9 +2,21 @@
   <q-page class="q-pa-md">
     <div class="row">
       <!-- <card-charts /> -->
-      <ChartCard class="col" :chartData="datosDeGrafico" />
-      <ChartCard class="col" :chartData="datosDeGrafico" />
-      <ChartCard class="col" :chartData="datosDeGrafico" />
+      <ChartCard
+        class="col"
+        :chartData="datosDeGrafico"
+        :title="'Visitas del día'"
+      />
+      <ChartCard
+        class="col"
+        :chartData="datosDeGrafico"
+        :title="'Visitas de la semana'"
+      />
+      <ChartCard
+        class="col"
+        :chartData="datosDeGrafico"
+        :title="'Visitas del mes'"
+      />
     </div>
     <div class="row">
       <TableComponent class="col" />

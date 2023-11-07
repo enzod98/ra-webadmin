@@ -1,14 +1,14 @@
 <template>
-  <q-layout view="hHh lpR lfr">
+  <q-layout view="hHh lpR lfr" class="overflow-hidden">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="las la-bars" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          <q-avatar class="q-mr-md">
+            <img src="/images/unida.jpg" />
           </q-avatar>
-          Title
+          Realidad Aumentada - Reportería
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -20,16 +20,17 @@
             <img src="~assets/images/usuario.png" />
           </q-avatar>
           <div class="text-weight-bold">Admin</div>
-          <div>@rstoenescu</div>
         </div>
       </q-img>
 
       <q-scroll-area
         style="
-          height: calc(100% - 150px);
+          height: calc(100% - 250px);
           margin-top: 150px;
+          margin-bottom: 100px;
           border-right: 1px solid #ddd;
         "
+        class="flex"
       >
         <q-list padding>
           <q-item clickable v-ripple @click="signOut">
@@ -41,6 +42,21 @@
           </q-item>
         </q-list>
       </q-scroll-area>
+
+      <q-img class="absolute-bottom bg-primary" style="height: 100px">
+        <div class="absolute-center bg-transparent text-center">
+          <div class="text-center">Desarrollado por</div>
+          <div class="text-center">
+            <a
+              href="https://enzodure.com"
+              target="_blank"
+              class="text-center text-strike text-white text-bold"
+              style="text-decoration: none"
+              >Enzo Duré</a
+            >
+          </div>
+        </div>
+      </q-img>
     </q-drawer>
 
     <q-page-container>

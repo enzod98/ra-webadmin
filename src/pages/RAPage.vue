@@ -30,9 +30,9 @@
         look-at="[gps-camera]"
         animation-mixer="loop: repeat"
         gltf-model="/assets/skeleton.gltf"
-        rotation="0 100 4"
-        scale="2 2 2"
-        position="16 -2 1"
+        rotation="0 80 4"
+        scale="6 6 6"
+        position="40 -7 1"
         material="color: gray; opacity: 0.5"
       ></a-entity>
 
@@ -89,10 +89,10 @@
           geometry="primitive: plane; height:3; width: 0.75"
           position="0.5 -2.5 -10"
           rotation="-75 -50 65"
-          color="#EF2D5E"
+          color="red"
         >
           <a-entity
-            material="color:white; shadder:flat"
+            material="color:#e1e1e1; shadder:flat"
             text-geometry="value: Fisioterapia; size:0.35;"
             position="0 1.2 0"
             rotation="0 0 -90"

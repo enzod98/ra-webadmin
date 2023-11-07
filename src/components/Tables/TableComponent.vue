@@ -1,14 +1,17 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md col-8">
     <q-table
       flat
       bordered
-      title="Treats"
+      title="Lugares más visitados"
       :rows="rows"
       :columns="columns"
       color="primary"
       row-key="name"
       :rows-per-page-options="[]"
+      icon-prev-page="las la-angle-left"
+      icon-next-page="las la-angle-right"
+      column-sort-order=""
     >
       <template v-slot:top-right>
         <q-btn
@@ -30,37 +33,23 @@ const columns = [
   {
     name: "name",
     required: true,
-    label: "Dessert (100g serving)",
+    label: "Descripción",
     align: "left",
     field: (row) => row.name,
     format: (val) => `${val}`,
     sortable: true,
   },
   {
-    name: "calories",
+    name: "Hoy",
     align: "center",
-    label: "Calories",
+    label: "Hoy",
     field: "calories",
     sortable: true,
   },
-  { name: "fat", label: "Fat (g)", field: "fat", sortable: true },
-  { name: "carbs", label: "Carbs (g)", field: "carbs" },
-  { name: "protein", label: "Protein (g)", field: "protein" },
-  { name: "sodium", label: "Sodium (mg)", field: "sodium" },
-  {
-    name: "calcium",
-    label: "Calcium (%)",
-    field: "calcium",
-    sortable: true,
-    sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-  },
-  {
-    name: "iron",
-    label: "Iron (%)",
-    field: "iron",
-    sortable: true,
-    sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-  },
+  { name: "fat", label: "Ayer", field: "fat", sortable: true },
+  { name: "carbs", label: "Semana", field: "carbs" },
+  { name: "protein", label: "Mes", field: "protein" },
+  { name: "sodium", label: "Año", field: "sodium" },
 ];
 
 const rows = [
