@@ -79,43 +79,110 @@
         ></a-entity> -->
 
         <a-image
-          geometry="primitive: plane; height: 80; width: 45"
-          position="-12 -0.15 -50"
-          src="/images/pasillo_nutri.jpeg"
+          geometry="primitive: plane; height: 53.3; width: 30"
+          position="0 -0.15 -50"
+          src="/images/entrada_uni.jpeg"
           text="width: auto; color:white;value: This text will be 4 units wide."
         ></a-image>
 
         <a-entity
           geometry="primitive: plane; height:3; width: 0.75"
-          position="0.5 -2.5 -10"
-          rotation="-75 -50 65"
-          color="red"
+          position="1 3 -10"
+          rotation="0 -50 92.5"
+          color="#EF2D5E"
         >
           <a-entity
-            material="color:#e1e1e1; shadder:flat"
-            text-geometry="value: Fisioterapia; size:0.35;"
+            material="color:white; shadder:flat"
+            text-geometry="value: Planta 3; size:0.35;"
             position="0 1.2 0"
+            rotation="0 0 -90"
+          ></a-entity>
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: Aulas 17-25; size:0.2;"
+            position="-0.25 1.2 0"
+            rotation="0 0 -90"
+          ></a-entity>
+        </a-entity>
+        <a-entity
+          geometry="primitive: plane; height:3; width: 0.75"
+          position="1 1 -10"
+          rotation="0 -50 88"
+          color="#EF2D5E"
+        >
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: Planta 2; size:0.35;"
+            position="0 1.2 0"
+            rotation="0 0 -90"
+          >
+          </a-entity>
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: Aulas 9-16; size:0.2;"
+            position="-0.25 1.2 0"
             rotation="0 0 -90"
           ></a-entity>
         </a-entity>
 
         <a-entity
+          geometry="primitive: plane; height:1.75; width: 1"
+          position="-1.5 1 -10"
+          rotation="0 -45 87"
+          color="#EF2D5E"
+        >
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: B; size:0.35;"
+            position="0 0.15 0"
+            rotation="0 0 -90"
+          >
+          </a-entity>
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: Bloque; size:0.2;"
+            position="-0.25 0.4 0"
+            rotation="0 0 -90"
+          ></a-entity>
+        </a-entity>
+
+        <a-entity
+          geometry="primitive: plane; height:3; width: 0.75"
+          position="1 -1 -10"
+          rotation="0 -50 81"
+          color="#EF2D5E"
+        >
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: Planta 1; size:0.35;"
+            position="0 1.2 0"
+            rotation="0 0 -90"
+          ></a-entity>
+          <a-entity
+            material="color:white; shadder:flat"
+            text-geometry="value: Aulas 1-8; size:0.2;"
+            position="-0.25 1.2 0"
+            rotation="0 0 -90"
+          ></a-entity>
+        </a-entity>
+
+        <!-- <a-entity
           id="entityTextBloque"
           material="color:#e1e1e1; blending: additive;"
           text-geometry="value: Bloque; size:0.015;baseline:center;"
           position="-0.055 0.15 -0.5"
           rotation="15 0 0"
         >
-        </a-entity>
+        </a-entity> -->
 
-        <a-entity
+        <!-- <a-entity
           id="entityTextNivel"
           material="color:#e1e1e1"
           text-geometry="value: Nivel; size:0.0125;"
           text="baseline:center"
           position="-0.05 0.125 -0.5"
           rotation="15 0 0"
-        ></a-entity>
+        ></a-entity> -->
 
         <!-- <a-entity
           text-geometry="value: Planta; size:0.01"
