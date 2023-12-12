@@ -32,6 +32,14 @@ app.post("/login", (req, res) => {
         });
       }
 
+      if (!usuarioDB.activo)
+        return res.status(400).json({
+          ok: false,
+          error: {
+            message: "Usuario inhabilitado",
+          },
+        });
+
       let token = jwt.sign({ usuario: usuarioDB }, process.env.SEED, {
         expiresIn: parseInt(process.env.TOKEN_EXPIRATION),
       });
@@ -52,7 +60,6 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/login/validar-token", verificarToken, (req, res) => {
-  console.log("sii");
   return res.status(200).json({
     ok: true,
   });
