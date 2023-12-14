@@ -204,6 +204,7 @@ export default {
     const tieneAccesoAUbicacion = ref(true);
 
     onBeforeMount(async () => {
+      await eventoSolicitarAccesoCamara();
       await verificarPermisos();
 
       if (!necesitaPermisos.value) await generarContenido();
@@ -339,7 +340,6 @@ export default {
     }
 
     async function eventoSolicitarAccesoCamara() {
-      await verificarPermisos();
       notificarSolicitudEnCurso();
       try {
         await navigator.mediaDevices.getUserMedia({ video: true });
