@@ -341,6 +341,7 @@ export default {
         await navigator.mediaDevices.getUserMedia({ video: true });
         notificarSolicitudAceptada("cámara");
         tieneAccesoACamara.value = true;
+        if (!necesitaPermisos.value) await generarContenido();
       } catch (err) {
         tieneAccesoACamara.value = false;
         notificarDenegacion("cámara");
@@ -354,6 +355,7 @@ export default {
         async () => {
           notificarSolicitudAceptada("ubicación");
           tieneAccesoAUbicacion.value = true;
+          if (!necesitaPermisos.value) await generarContenido();
         },
         (err) => {
           tieneAccesoAUbicacion.value = false;
