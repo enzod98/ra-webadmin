@@ -262,26 +262,26 @@ export default {
             value: "" + contenido.descripcion,
           });
 
-          let elEscena = document.getElementById("escena");
-          for (entidad of entidades) {
-            let nuevaEntidad = document.createElement("a-entity");
-            for (propiedad of entidad.propiedades) {
-              nuevaEntidad.setAttribute(propiedad.atributo, propiedad.valor);
-            }
-            entidadesHijas = entidadesHijas.filter(
-              (entidadHija) => entidadHija.id_entidad == entidad._id
-            );
-            for (entidadHija of entidadesHijas) {
-              let nuevaEntidadHija = document.createElement("a-entity");
-              for (propiedad of entidadHija.propiedades) {
-                nuevaEntidadHija.setAttribute(
-                  propiedad.atributo,
-                  propiedad.valor
-                );
-              }
-              nuevaEntidad.appendChild(nuevaEntidadHija);
-            }
-            elEscena.appendChild(nuevaEntidad);
+          // let elEscena = document.getElementById("escena");
+          // for (entidad of entidades) {
+          //   let nuevaEntidad = document.createElement("a-entity");
+          //   for (propiedad of entidad.propiedades) {
+          //     nuevaEntidad.setAttribute(propiedad.atributo, propiedad.valor);
+          //   }
+          //   entidadesHijas = entidadesHijas.filter(
+          //     (entidadHija) => entidadHija.id_entidad == entidad._id
+          //   );
+          //   for (entidadHija of entidadesHijas) {
+          //     let nuevaEntidadHija = document.createElement("a-entity");
+          //     for (propiedad of entidadHija.propiedades) {
+          //       nuevaEntidadHija.setAttribute(
+          //         propiedad.atributo,
+          //         propiedad.valor
+          //       );
+          //     }
+          //     nuevaEntidad.appendChild(nuevaEntidadHija);
+          //   }
+          //   elEscena.appendChild(nuevaEntidad);
           }
         })
         .catch(({ response }) => {
