@@ -17,6 +17,7 @@ app.use(
   cors({
     credentials: true,
     origin: [
+      "http://localhost:" + process.env.Q_PORT,
       "https://localhost:" + process.env.Q_PORT,
       "https://" + process.env.Q_HOSTNAME + ":" + process.env.Q_PORT,
       process.env.Q_HOSTNAME,

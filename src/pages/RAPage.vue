@@ -1,16 +1,20 @@
 <template>
-  <div style="margin: 0; overflow: hidden" class="window-height">
+  <div
+    v-if="!necesitaPermisos"
+    style="margin: 0; overflow: hidden"
+    class="window-height"
+  >
     <a-scene
-      v-if="!necesitaPermisos"
       vr-mode-ui="enabled: false;"
       embedded
       renderer="logarithmicDepthBuffer: true;"
       loading-screen="enabled: false;"
       arjs="sourceType: webcam; debugUIEnabled: true;trackingMethod: best;"
+      id="escena"
     >
       <a-marker preset="hiro" markerhandler> </a-marker>
 
-      <a-entity
+      <!-- <a-entity
         look-at="[gps-camera]"
         animation-mixer="loop: repeat"
         gltf-model="/assets/skeleton.gltf"
@@ -18,8 +22,7 @@
         scale="6 6 6"
         position="40 -7 1"
         material="color: gray; opacity: 0.5"
-      ></a-entity>
-      <!-- <a-box material="color: yellow" position="2 2 0" /> -->
+      ></a-entity> -->
 
       <a-entity
         geometry="primitive: plane; height:3; width: 0.75"
@@ -40,6 +43,7 @@
           rotation="0 0 -90"
         ></a-entity>
       </a-entity>
+
       <a-entity
         geometry="primitive: plane; height:3; width: 0.75"
         position="1 1 -10"
@@ -138,50 +142,49 @@
         ></a-entity>
       </a-entity>
     </a-scene>
-
-    <q-dialog v-model="necesitaPermisos" per sistent>
-      <q-card class="q-py-lg">
-        <q-card-section class="row items-center justify-center">
-          <q-avatar
-            icon="las la-info-circle"
-            color="primary"
-            text-color="white"
-          />
-          <span class="q-ml-sm text-h6"
-            >Necesitamos acceso al hardware de tu equipo</span
-          >
-        </q-card-section>
-
-        <q-card-section class="row items-center q-mx-lg">
-          <p class="text-center">
-            Para una experiencia completa de realidad virtual, esta aplicación
-            necesita autorización para utilziar tu cámara y tu ubicación actual.
-            <br />
-            ¡No te preocupes! No recopilamos ningún tipo de información personal
-          </p>
-        </q-card-section>
-
-        <q-card-actions align="center">
-          <q-btn
-            round
-            icon="las la-camera"
-            class="q-pa-md"
-            :color="tieneAccesoACamara ? 'green' : 'red'"
-            :disable="tieneAccesoACamara"
-            @click="eventoSolicitarAccesoCamara"
-          />
-          <q-btn
-            round
-            icon="las la-map-marker"
-            class="q-pa-md"
-            :color="tieneAccesoAUbicacion ? 'green' : 'red'"
-            :disable="tieneAccesoAUbicacion"
-            @click="eventoSolicitarAccesoUbicacion"
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </div>
+  <q-dialog v-model="necesitaPermisos" persistent position="bottom">
+    <q-card class="q-py-lg">
+      <q-card-section class="row items-center justify-center">
+        <q-avatar
+          icon="las la-info-circle"
+          color="primary"
+          text-color="white"
+        />
+        <span class="q-ml-sm text-h6"
+          >Necesitamos acceso al hardware de tu equipo</span
+        >
+      </q-card-section>
+
+      <q-card-section class="row items-center q-mx-lg">
+        <p class="text-center">
+          Para una experiencia completa de realidad virtual, esta aplicación
+          necesita autorización para utilziar tu cámara y tu ubicación actual.
+          <br />
+          ¡No te preocupes! No recopilamos ningún tipo de información personal
+        </p>
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <q-btn
+          round
+          icon="las la-camera"
+          class="q-pa-md"
+          :color="tieneAccesoACamara ? 'green' : 'red'"
+          :disable="tieneAccesoACamara"
+          @click="eventoSolicitarAccesoCamara"
+        />
+        <q-btn
+          round
+          icon="las la-map-marker"
+          class="q-pa-md"
+          :color="tieneAccesoAUbicacion ? 'green' : 'red'"
+          :disable="tieneAccesoAUbicacion"
+          @click="eventoSolicitarAccesoUbicacion"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -209,38 +212,8 @@ export default {
       tieneAccesoACamara.value = accesoACamara.state === "granted";
       tieneAccesoAUbicacion.value = accesoAUbicacion.state === "granted";
 
-      await api
-        .get("contenido/" + idLocation)
-        .then(({ data }) => {
-          let { contenido } = data;
-          console.log(contenido);
-
-          let elBloque = document.getElementById("entityTextBloque");
-          elBloque.setAttribute("text-geometry", {
-            value: "Bloque " + contenido.bloque,
-          });
-
-          let elNivel = document.getElementById("entityTextNivel");
-          elNivel.setAttribute("text-geometry", {
-            value: "" + contenido.nivel,
-          });
-
-          let elDescripcion = document.getElementById("entityTextDescripcion");
-          elDescripcion.setAttribute("text-geometry", {
-            value: "" + contenido.descripcion,
-          });
-        })
-        .catch(({ response }) => {
-          console.log(response);
-          $q.notify({
-            icon: "las la-times",
-            type: "negative",
-            message: response.data.err,
-            actions: [{ label: "Cerrar", color: "white" }],
-            position: "center",
-            timeout: 0,
-          });
-        });
+      eventoSolicitarAccesoCamara();
+      if (!necesitaPermisos.value) await generarContenido();
     });
 
     AFRAME.registerComponent("markerhandler", {
@@ -262,6 +235,67 @@ export default {
     );
 
     let notifySolicitudEnCurso;
+
+    async function generarContenido() {
+      await api
+        .get("contenido/" + idLocation)
+        .then(async ({ data }) => {
+          let { contenido } = data;
+          let { entidades } = data;
+          let { entidadesHijas } = data;
+          // console.log(contenido);
+          // console.log(entidades);
+          // console.log(entidadesHijas);
+
+          let elBloque = document.getElementById("entityTextBloque");
+          elBloque.setAttribute("text-geometry", {
+            value: "Bloque " + contenido.bloque,
+          });
+
+          let elNivel = document.getElementById("entityTextNivel");
+          elNivel.setAttribute("text-geometry", {
+            value: "" + contenido.nivel,
+          });
+
+          let elDescripcion = document.getElementById("entityTextDescripcion");
+          elDescripcion.setAttribute("text-geometry", {
+            value: "" + contenido.descripcion,
+          });
+
+          let elEscena = document.getElementById("escena");
+          for (entidad of entidades) {
+            let nuevaEntidad = document.createElement("a-entity");
+            for (propiedad of entidad.propiedades) {
+              nuevaEntidad.setAttribute(propiedad.atributo, propiedad.valor);
+            }
+            entidadesHijas = entidadesHijas.filter(
+              (entidadHija) => entidadHija.id_entidad == entidad._id
+            );
+            for (entidadHija of entidadesHijas) {
+              let nuevaEntidadHija = document.createElement("a-entity");
+              for (propiedad of entidadHija.propiedades) {
+                nuevaEntidadHija.setAttribute(
+                  propiedad.atributo,
+                  propiedad.valor
+                );
+              }
+              nuevaEntidad.appendChild(nuevaEntidadHija);
+            }
+            elEscena.appendChild(nuevaEntidad);
+          }
+        })
+        .catch(({ response }) => {
+          console.log(response);
+          $q.notify({
+            icon: "las la-times",
+            type: "negative",
+            message: response.data.err,
+            actions: [{ label: "Cerrar", color: "white" }],
+            position: "center",
+            timeout: 0,
+          });
+        });
+    }
 
     function notificarDenegacion(tipoPermiso) {
       notifySolicitudEnCurso({
@@ -301,36 +335,40 @@ export default {
       });
     }
 
+    async function eventoSolicitarAccesoCamara() {
+      notificarSolicitudEnCurso();
+      try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+        notificarSolicitudAceptada("cámara");
+        tieneAccesoACamara.value = true;
+      } catch (err) {
+        tieneAccesoACamara.value = false;
+        notificarDenegacion("cámara");
+        console.log(err);
+      }
+    }
+
+    async function eventoSolicitarAccesoUbicacion() {
+      notificarSolicitudEnCurso();
+      await navigator.geolocation.getCurrentPosition(
+        async () => {
+          notificarSolicitudAceptada("ubicación");
+          tieneAccesoAUbicacion.value = true;
+        },
+        (err) => {
+          tieneAccesoAUbicacion.value = false;
+          notificarDenegacion("ubicación");
+        }
+      );
+    }
+
     return {
       idLocation,
       tieneAccesoACamara,
       tieneAccesoAUbicacion,
       necesitaPermisos,
-      eventoSolicitarAccesoCamara: async function () {
-        notificarSolicitudEnCurso();
-        try {
-          await navigator.mediaDevices.getUserMedia({ video: true });
-          notificarSolicitudAceptada("cámara");
-          tieneAccesoACamara.value = true;
-        } catch (err) {
-          tieneAccesoACamara.value = false;
-          notificarDenegacion("cámara");
-          console.log(err);
-        }
-      },
-      eventoSolicitarAccesoUbicacion: async function () {
-        notificarSolicitudEnCurso();
-        await navigator.geolocation.getCurrentPosition(
-          () => {
-            notificarSolicitudAceptada("ubicación");
-            tieneAccesoAUbicacion.value = true;
-          },
-          (err) => {
-            tieneAccesoAUbicacion.value = false;
-            notificarDenegacion("ubicación");
-          }
-        );
-      },
+      eventoSolicitarAccesoCamara,
+      eventoSolicitarAccesoUbicacion,
     };
   },
 };
