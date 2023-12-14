@@ -282,7 +282,7 @@ export default {
           //     nuevaEntidad.appendChild(nuevaEntidadHija);
           //   }
           //   elEscena.appendChild(nuevaEntidad);
-          }
+          // }
         })
         .catch(({ response }) => {
           console.log(response);
