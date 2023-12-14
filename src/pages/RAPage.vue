@@ -200,11 +200,10 @@ export default {
 
     const idLocation = $router.currentRoute.value.params.idLocation;
 
-    const tieneAccesoACamara = ref(true);
-    const tieneAccesoAUbicacion = ref(true);
+    const tieneAccesoACamara = ref(false);
+    const tieneAccesoAUbicacion = ref(false);
 
     onBeforeMount(async () => {
-      await eventoSolicitarAccesoCamara();
       await verificarPermisos();
 
       if (!necesitaPermisos.value) await generarContenido();
