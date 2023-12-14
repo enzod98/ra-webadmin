@@ -14,7 +14,7 @@
     >
       <a-marker preset="hiro" markerhandler> </a-marker>
 
-      <!-- <a-entity
+      <a-entity
         look-at="[gps-camera]"
         animation-mixer="loop: repeat"
         gltf-model="/assets/skeleton.gltf"
@@ -22,7 +22,7 @@
         scale="6 6 6"
         position="40 -7 1"
         material="color: gray; opacity: 0.5"
-      ></a-entity> -->
+      ></a-entity>
 
       <a-entity
         geometry="primitive: plane; height:3; width: 0.75"
