@@ -204,13 +204,7 @@ export default {
     const tieneAccesoAUbicacion = ref(true);
 
     onBeforeMount(async () => {
-      let accesoACamara = await navigator.permissions.query({ name: "camera" });
-      let accesoAUbicacion = await navigator.permissions.query({
-        name: "geolocation",
-      });
-
-      tieneAccesoACamara.value = accesoACamara.state === "granted";
-      tieneAccesoAUbicacion.value = accesoAUbicacion.state === "granted";
+      verificarPermisos();
 
       if (!necesitaPermisos.value) await generarContenido();
     });
@@ -334,7 +328,18 @@ export default {
       });
     }
 
+    async function verificarPermisos() {
+      let accesoACamara = await navigator.permissions.query({ name: "camera" });
+      let accesoAUbicacion = await navigator.permissions.query({
+        name: "geolocation",
+      });
+
+      tieneAccesoACamara.value = accesoACamara.state === "granted";
+      tieneAccesoAUbicacion.value = accesoAUbicacion.state === "granted";
+    }
+
     async function eventoSolicitarAccesoCamara() {
+      verificarPermisos();
       notificarSolicitudEnCurso();
       try {
         await navigator.mediaDevices.getUserMedia({ video: true });
@@ -349,11 +354,13 @@ export default {
     }
 
     async function eventoSolicitarAccesoUbicacion() {
+      verificarPermisos();
       notificarSolicitudEnCurso();
       await navigator.geolocation.getCurrentPosition(
         async () => {
           notificarSolicitudAceptada("ubicación");
           tieneAccesoAUbicacion.value = true;
+
           if (!necesitaPermisos.value) await generarContenido();
         },
         (err) => {
