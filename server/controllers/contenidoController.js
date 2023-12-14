@@ -20,7 +20,7 @@ app.get("/contenido/:id", async (req, res) => {
         fecha: new Date(),
         id_contenido: contenido._id,
       });
-
+      console.log(contenido);
       await visita
         .save()
         .then((visitaDB) => {
