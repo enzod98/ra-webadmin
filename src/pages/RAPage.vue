@@ -158,7 +158,7 @@
 
       <q-card-section class="row items-center q-mx-lg">
         <p class="text-center">
-          Para una experiencia completa de realidad virtual, esta aplicación
+          Para una experiencia completa de realidad aumentada, esta aplicación
           necesita autorización para utilziar tu cámara y tu ubicación actual.
           <br />
           ¡No te preocupes! No recopilamos ningún tipo de información personal
@@ -212,7 +212,6 @@ export default {
       tieneAccesoACamara.value = accesoACamara.state === "granted";
       tieneAccesoAUbicacion.value = accesoAUbicacion.state === "granted";
 
-      eventoSolicitarAccesoCamara();
       if (!necesitaPermisos.value) await generarContenido();
     });
 
